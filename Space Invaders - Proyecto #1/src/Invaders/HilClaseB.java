@@ -1,8 +1,6 @@
 package Invaders;
 
-import game.GameWindow;
 import javafx.animation.TranslateTransition;
-import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 /**
@@ -11,7 +9,7 @@ import javafx.util.Duration;
  *  resto de los miembros de la hilera. Es una lista doblemente enlazada."
  * 
  * @author Rubén Salas
- * @version 1.3
+ * @version 1.4
  * @since 17/03/18
  */
 public class HilClaseB extends Hil{
@@ -66,10 +64,21 @@ public class HilClaseB extends Hil{
 				//Si está de primero
 				if(prev == null){
 					super.setHead(temp.getNext());
+					
+					//Interfaz
+					temp.getImage().setLayoutX(-200);
+					temp.getImage().setLayoutY(-200);
+					
 					super.getHead().setPrev(null);
+					
 				}
 				//Si está en el medio de otros enemigos
 				else {
+					
+					//Interfaz
+					prev.getNext().getImage().setLayoutX(-200);
+					prev.getNext().getImage().setLayoutY(-200);
+					
 					prev.setNext(temp.getNext());
 					Enemy aux = temp.getNext();
 					aux.setPrev(prev);
@@ -81,7 +90,13 @@ public class HilClaseB extends Hil{
 			temp = temp.getNext();
 		}
 		//Si el que hay que eliminar es el último
-		if(super.getTail().getName() == name){
+		if(super.getTail().getName() == name && super.getTail() != super.getHead()){
+			
+			//Interfaz
+			super.getTail().getImage().setLayoutX(-200);
+			super.getTail().getImage().setLayoutY(-200);
+			
+			
 			super.setTail(temp.getPrev());
 			super.getTail().setNext(null);
 		}
@@ -96,6 +111,23 @@ public class HilClaseB extends Hil{
 	@Override
 	public void center() {
 		System.out.println("Se centran los Enemies");
+		
+		int n = 1;
+		Enemy temp = this.getHead();
+		
+		for (int i = 1; i <= this.getSize(); i++){
+			int posX = 25 + (45*(9 - this.getSize())) + (90 * (i-1)); //aumenta 90 pixeles su posición
+			
+			while (i == n){
+			
+			temp.setPosX(posX);
+			temp.getImage().setLayoutX(posX);
+			temp = temp.getNext();
+			n++;
+			
+			}
+		}
+		this.print(); //TEST
 	}
 	
 	/**
@@ -148,10 +180,9 @@ public class HilClaseB extends Hil{
 //			swapee.getImage().setLayoutX(temp.getPosX());
 		}
 	
-	
-		
-	
-	
+	/**
+	 * Imprime la Hilera
+	 */
 	public void print(){
 		Enemy temp = super.getHead();
 		while (temp != null){
@@ -160,14 +191,22 @@ public class HilClaseB extends Hil{
 		}
 	}
 	
+	/**
+	 * Muestra la Hilera en pantalla
+	 */
 	public void show(){
 		Enemy temp = this.getHead();
 		
+		this.setYs();
+		
 		while(temp != null){ //Recorre la lista hasta llegar al ultimo Enemy
-			temp.getImage().setFitHeight(90);
-			temp.getImage().setFitWidth(90);
+			temp.getImage().setFitHeight(80);
+			temp.getImage().setFitWidth(80);
 			temp.getImage().setLayoutX(temp.getPosX());
-			temp.getImage().setLayoutY(temp.getPosY());
+			temp.getImage().setLayoutY(40);
+			
+			System.out.println(temp.getImage().getLayoutX());
+			System.out.println(temp.getImage().getLayoutY());
 			
 			//Animacion
 			TranslateTransition trans = new TranslateTransition();
@@ -176,8 +215,15 @@ public class HilClaseB extends Hil{
 			trans.setToY(430);
 			trans.play();
 			
-			temp = temp.getNext();
+			TranslateTransition trans2 = new TranslateTransition();
+			trans2.setDuration(Duration.millis(4000)); 
+			trans2.setNode(temp.getImage());
+			trans2.setToX(50);
+			trans2.setAutoReverse(true);
+			trans2.setCycleCount(TranslateTransition.INDEFINITE);
+			trans2.play();
 			
+			temp = temp.getNext();
 			
 		}
 		
@@ -185,24 +231,32 @@ public class HilClaseB extends Hil{
 
 			@Override
 			public void run() {
-				
 				swap();
-				
+
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 			}
-			
 		});
-		
-		//thread.start();
+		thread.start();
 		
 		swap();
-			
+	}
+	
+	/**
+	 * Redefine las coordenadas Y al entrar en pantalla
+	 */
+	public void setYs(){
+		Enemy temp = this.getHead();
+		
+		while(temp != null){ //Recorre la lista hasta llegar al ultimo Enemy
+			temp.setPosY(40);
+			temp = temp.getNext();
+		}
+		
 	}
 	
 }

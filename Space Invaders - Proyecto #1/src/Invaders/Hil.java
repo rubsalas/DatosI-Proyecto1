@@ -4,7 +4,7 @@ package Invaders;
  * Representacion de una Hilera:
  *  
  * @author Rubén Salas
- * @version 1.0
+ * @version 1.6
  * @since 14/03/18
  *
  */
@@ -143,7 +143,17 @@ public class Hil implements HilMethods{
 			
 		}
 		
+		/**
+		 * Muestra la Hilera en pantalla
+		 */
 		public void show(){
+			
+		}
+		
+		/**
+		 * Al entrar la hilera a la pantalla sus coordenadas en y son redefinidas
+		 */
+		public void setYs() {
 			
 		}
 

@@ -1,16 +1,15 @@
 package Invaders;
 
-import game.GameWindow;
 import javafx.animation.TranslateTransition;
-import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 /**
  * Representación de la Hilera Clase C:
  * "Igual que la A pero si el jefe se destruye, otro toma 
  *  su lugar aleatoriamente. Es una lista circular."
+ *  
  * @author Rubén Salas
- * @version 1.3
+ * @version 1.5
  * @since 18/03/18
  */
 public class HilClaseC extends Hil{
@@ -58,14 +57,19 @@ public class HilClaseC extends Hil{
 		 */
 		@Override
 		public void destroyEnemy(String name) {
-			//Si se elimina al Boss
-			if (name == "boss"){
-				changeBoss();
-			}
-			//Si es cualquier otro Enemy
-			else {
+//			//Si se elimina al Boss
+//			if (name == "boss"){
+//				changeBoss();
+//			}
+//			//Si es cualquier otro Enemy
+//			else {
 				//Si se elimina al primero
 				if (super.getHead().getName() == name){
+					
+					//Interfaz
+					super.getHead().getImage().setLayoutX(-200);
+					super.getHead().getImage().setLayoutY(-200);
+					
 					super.setHead(super.getHead().getNext());
 					super.getTail().setNext(super.getHead());
 				}
@@ -78,18 +82,29 @@ public class HilClaseC extends Hil{
 					}
 					//Si es el último
 					if (aux.getNext() == super.getTail()){
+						
+						//Interfaz
+						super.getTail().getImage().setLayoutX(-200);
+						super.getTail().getImage().setLayoutY(-200);
+						
 						aux.setNext(super.getHead());
 						super.setTail(aux);
 					}
 					else {
+
 						Enemy next = aux.getNext();
+						
+						//Interfaz
+						next.getImage().setLayoutX(-200);
+						next.getImage().setLayoutY(-200);
+						
 						aux.setNext(next.getNext());
 					}
 				}
 				super.minusSize();
 				center();
 			}
-		}
+//		}
 		
 		/**
 		 * Centra los Enemies de la lista.
@@ -97,6 +112,23 @@ public class HilClaseC extends Hil{
 		@Override
 		public void center() {
 			System.out.println("Se centran los Enemies");
+			
+			int n = 1;
+			Enemy temp = this.getHead();
+			
+			for (int i = 1; i <= this.getSize(); i++){
+				int posX = 25 + (45*(9 - this.getSize())) + (90 * (i-1)); //aumenta 90 pixeles su posición
+				
+				while (i == n){
+				
+				temp.setPosX(posX);
+				temp.getImage().setLayoutX(posX);
+				temp = temp.getNext();
+				n++;
+				
+				}
+			}
+			this.print(); //TEST
 		}
 		
 		/**
@@ -108,6 +140,9 @@ public class HilClaseC extends Hil{
 			System.out.println("Cambio de Boss");
 		}
 		
+		/**
+		 * Imprime la lista
+		 */
 		public void print(){
 			Enemy temp = super.getHead();
 			while (temp != super.getTail()){
@@ -115,16 +150,24 @@ public class HilClaseC extends Hil{
 				temp = temp.getNext();
 			}
 			System.out.println(super.getTail().getName());
-		}
-		
+		}		
+	
+		/**
+		 * Muestra la hilera en pantalla
+		 */
 		public void show(){
 			Enemy temp = super.getHead();
 			
+			this.setYs();
+			
 			while(temp != super.getTail()){ //Recorre la lista hasta llegar al ultimo Enemy
-				temp.getImage().setFitHeight(90);
-				temp.getImage().setFitWidth(90);
+				temp.getImage().setFitHeight(80);
+				temp.getImage().setFitWidth(80);
 				temp.getImage().setLayoutX(temp.getPosX());
 				temp.getImage().setLayoutY(temp.getPosY());
+				
+				System.out.println(temp.getImage().getLayoutX());
+				System.out.println(temp.getImage().getLayoutY());
 				
 				//Animacion
 				TranslateTransition trans = new TranslateTransition();
@@ -134,10 +177,18 @@ public class HilClaseC extends Hil{
 				trans.setToY(430);
 				trans.play();
 				
+				TranslateTransition trans2 = new TranslateTransition();
+				trans2.setDuration(Duration.millis(4000)); 
+				trans2.setNode(temp.getImage());
+				trans2.setToX(50);
+				trans2.setAutoReverse(true);
+				trans2.setCycleCount(TranslateTransition.INDEFINITE);
+				trans2.play();
+				
 				temp = temp.getNext();
 			}
-			super.getTail().getImage().setFitHeight(90);
-			super.getTail().getImage().setFitWidth(90);
+			super.getTail().getImage().setFitHeight(80);
+			super.getTail().getImage().setFitWidth(80);
 			super.getTail().getImage().setLayoutX(temp.getPosX()); 
 			super.getTail().getImage().setLayoutY(temp.getPosY());
 			
@@ -148,7 +199,28 @@ public class HilClaseC extends Hil{
 			trans.setNode(super.getTail().getImage());
 			trans.setToY(430);
 			trans.play();
+			
+			TranslateTransition trans2 = new TranslateTransition();
+			trans2.setDuration(Duration.millis(4000)); 
+			trans2.setNode(temp.getImage());
+			trans2.setToX(50);
+			trans2.setAutoReverse(true);
+			trans2.setCycleCount(TranslateTransition.INDEFINITE);
+			trans2.play();
 				
+		}
+		
+		/**
+		 * Redefine las coordenadas Y al entrar en pantalla
+		 */
+		public void setYs(){
+			Enemy temp = this.getHead();
+			
+			while (temp != super.getTail()){
+				temp.setPosY(40);
+				temp = temp.getNext();
+			}
+			super.getTail().setPosY(40);
 		}
 		
 }

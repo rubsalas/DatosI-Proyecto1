@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView;
 /**
  * Clase que representa un Jefe
  *
- * @author Rubsalas
+ * @author Rubén Salas
  * @version 1.1
  * @since 14/03/18
  */

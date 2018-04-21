@@ -4,9 +4,10 @@ import Invaders.*;
 import javafx.scene.image.ImageView;
 
 /**
- * Creador de las Hileras
+ * Creador de las Hileras.
+ * 
  * @author Rubén Salas
- * @version 1.2
+ * @version 1.7
  * @since 25/03/18
  */
 public class HilCreator {
@@ -14,6 +15,7 @@ public class HilCreator {
 	
 	/**
 	 * Crea una hilera Basic.
+	 * @param need - necesidad
 	 */
 	public static Hil createHilBasic(String need){
 		System.out.println("Creating HilBasic"); //TEST
@@ -41,6 +43,7 @@ public class HilCreator {
 	
 	/**
 	 * Crea una hilera Clase A.
+	 * @param need - necesidad
 	 */
 	public static Hil createHilClaseA(String need){
 		System.out.println("Creating HilClaseA"); //TEST
@@ -76,6 +79,7 @@ public class HilCreator {
 	
 	/**
 	 * Crea una hilera Clase B.
+	 * @param need - necesidad
 	 */
 	public static Hil createHilClaseB(String need){
 		System.out.println("Creating HilClaseB"); //TEST
@@ -109,6 +113,7 @@ public class HilCreator {
 	
 	/**
 	 * Crea una hilera Clase C.
+	 * @param need - necesidad
 	 */
 	public static Hil createHilClaseC(String need){
 		System.out.println("Creating HilClaseC"); //TEST
@@ -143,6 +148,7 @@ public class HilCreator {
 	
 	/**
 	 * Crea una hilera Clase D.
+	 * @param need - necesidad
 	 */
 	public static Hil createHilClaseD(String need){
 		System.out.println("Creating HilClaseD"); //TEST
@@ -179,6 +185,7 @@ public class HilCreator {
 	
 	/**
 	 * Crea una hilera Clase E.
+	 * @param need - necesidad
 	 */
 	public static Hil createHilClaseE(String need){
 		System.out.println("Creating HilClaseE"); //TEST
@@ -210,6 +217,11 @@ public class HilCreator {
 		return actualHil;
 	}
 	
+	/**
+	 * Establece la imagen para cada enemigo conforme se va agregando.
+	 * @param enemy - Enemy
+	 * @return image para cada Enemy correspondiente
+	 */
 	public static ImageView setImageEnemy(String enemy){
 		switch (enemy){
 			case "1":
@@ -237,11 +249,15 @@ public class HilCreator {
 		}
 	}
 	
+	/**
+	 * Establece la velocidad con que bajan las hileras dependiendo del nivel en que se encuentre.
+	 * @return velocidad en y
+	 */
 	public static double setSpeedY(){
 		int lvl = GameWindow.player1.getActualLevel();
-		if (lvl <= 10){
+		if (lvl <= 3){
 			return 40000 - (1000*lvl);
-		} else if (lvl > 10 && lvl <= 30) {
+		} else if (lvl > 3 && lvl <= 10) {
 			return 30000 - (750*lvl);
 		} else {
 			return 15000;

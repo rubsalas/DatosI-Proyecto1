@@ -2,9 +2,10 @@ package game;
 import game.Ship;
 
 /**
- * Objeto jugador que tiene las estadísticas y características del jugador
+ * Objeto jugador que tiene las estadísticas y características del jugador.
+ * 
  * @author Rubén Salas
- * @version 1.3
+ * @version 1.4
  * @since 27/03/18
  */
 public class Player {

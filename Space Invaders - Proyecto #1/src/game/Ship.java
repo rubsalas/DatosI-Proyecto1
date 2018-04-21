@@ -1,17 +1,14 @@
 package game;
 
 import javafx.animation.TranslateTransition;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
-//import javafx.scene.image.Image;
-//import javafx.scene.image.ImageView;
-
 /**
- * Representa a la nave que usará el jugador
+ * Representa a la nave que usará el jugador.
+ * 
  * @author Rubén Salas
- *
+ * @version 1.6
+ * @since 30/03/18
  */
 public class Ship {
 	
@@ -19,8 +16,6 @@ public class Ship {
 	double posY = 525.0;
 	int lives;
 	boolean readyToFire, shot = false;
-	
-	Circle bullet;
 
 	/**
 	 * Constructor
@@ -81,11 +76,13 @@ public class Ship {
 	
 	/**
 	 * Hace que la nave se mueva horizontalmete por la pantalla
-	 * @param direction - 
+	 * @param direction - izquierda o derecha
 	 */
 	public void move(String direction){
 		if (direction == "right"){
 			this.posX = this.posX + 10;
+			if (this.posX >= 755)
+				this.posX = 755;
 			TranslateTransition trans = new TranslateTransition();
 			trans.setDuration(Duration.millis(1)); //
 			trans.setNode(GameWindow.imageShip);
@@ -94,50 +91,21 @@ public class Ship {
 			
 		} else {
 			this.posX = this.posX - 10;
+			if (this.posX <= 0)
+				this.posX = 0;
 			TranslateTransition trans = new TranslateTransition();
 			trans.setDuration(Duration.millis(1)); //
 			trans.setNode(GameWindow.imageShip);
 			trans.setToX(this.posX - 380);
 			trans.play();
+		//}
 		}
 		
-	}
+	}	
 	
 	/**
-	 * Salen proyectiles de la nave
+	 * Verifica sus vidas cuando es destruido por enemigo.
 	 */
-	public void shoot(){
-		System.out.println("Shooting");
-
-		GameWindow.bullet.setCenterX(this.posX + 50);
-		GameWindow.bullet.setCenterY(this.posY+15);
-		shot = true;
-
-		if (shot){
-			TranslateTransition trans = new TranslateTransition();
-			trans.setDuration(Duration.millis(3500)); //
-			trans.setNode(GameWindow.bullet);
-			trans.setToY(-550);
-			trans.play();
-			shot = false;
-			}
-		shot = false;
-	}
-			
-		
-		
-		
-		
-//		Circle bullet = GameWindow.bullet;
-//		bullet.setLayoutX(this.posX + 50);
-//		bullet.setLayoutY(this.posY);
-//		bullet.setStroke(Color.ORANGE);
-//		bullet.setFill(Color.YELLOW);
-//		
-
-	
-	
-	//Cada vez que es destruido por los Enemigos
 	public void destroy(){
 		
 		//AMINACION DE DESTRUCCION

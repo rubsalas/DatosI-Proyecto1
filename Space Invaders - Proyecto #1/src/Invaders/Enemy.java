@@ -2,13 +2,11 @@ package Invaders;
 
 import javafx.scene.image.ImageView;
 
-//import game.InGame;
-
 /**
  * Representa a los Enemigos que saldrán a destruir a la nave del jugador.
  * 
- * @author Rubsalas
- * @version 1.1
+ * @author Rubén Salas
+ * @version 1.2
  * @since 11/03/18
  */
 public class Enemy {
@@ -167,15 +165,17 @@ public class Enemy {
 		this.prev = prv;
 	}
 	
+	/**
+	 * Mueve al Enemy
+	 */
 	public void move(){
-		//switch con cases de momvimientos de diferentes clases de hileras
+
 	}
 	
+	/**
+	 * Hace que el Enemy dispare
+	 */
 	public void shoot(){
-//		if ( SHIP WAS HIT){
-//			InGame.getPlayer1().getShip().destroy();
-//		} else {
-//			
-//		}
+
 	}
 }

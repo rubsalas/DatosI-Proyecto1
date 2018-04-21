@@ -8,7 +8,7 @@ import javafx.util.Duration;
  * "Todos los elementos de la hilera son iguales"
  * 
  * @author Rubén Salas
- * @version 1.3
+ * @version 1.5
  * @since 11/03/18
  *
  */
@@ -58,16 +58,27 @@ public class HilBasic extends Hil{
 		public void destroyEnemy(String name) {
 			
 			if (super.getHead().getName() == name){
+				//Interfaz
+				super.getHead().getImage().setLayoutX(-200);
+				super.getHead().getImage().setLayoutY(-200);
+				//Cambia de referencia en lista
 				super.setHead(super.getHead().getNext());
+				
 			} else {
 				Enemy temp = super.getHead();
 				while(temp.getNext().getName() != name){
 					temp = temp.getNext();
 				}
+				//Interfaz
+				temp.getNext().getImage().setLayoutX(-200);
+				temp.getNext().getImage().setLayoutY(-200);
+				//Cambia de referencia en lista
 				temp.setNext( temp.getNext().getNext() );
 			}
 			super.minusSize();
 			center();
+			
+			
 		}
 
 		/**
@@ -76,8 +87,28 @@ public class HilBasic extends Hil{
 		@Override
 		public void center() {
 			System.out.println("Se centran los Enemies");
+			
+			int n = 1;
+			Enemy temp = this.getHead();
+			
+			for (int i = 1; i <= this.getSize(); i++){
+				int posX = 25 + (45*(9 - this.getSize())) + (90 * (i-1)); //aumenta 90 pixeles su posición
+				
+				while (i == n){
+				
+				temp.setPosX(posX);
+				temp.getImage().setLayoutX(posX);
+				temp = temp.getNext();
+				n++;
+				
+				}
+			}
+			this.print(); //TEST
 		}
 		
+		/**
+		 * Imprime la Hilera
+		 */
 		public void print(){
 			Enemy temp = super.getHead();
 			while (temp != null){
@@ -86,16 +117,23 @@ public class HilBasic extends Hil{
 			}
 		}
 		
+		/**
+		 * Muestra la Hilera en pantalla
+		 */
 		public void show(){
 			Enemy temp = this.getHead();
 			
-			
+			this.setYs();
 			
 			while(temp != null){ //Recorre la lista hasta llegar al ultimo Enemy
-				temp.getImage().setFitHeight(90);
-				temp.getImage().setFitWidth(90);
+				temp.getImage().setFitHeight(80);
+				temp.getImage().setFitWidth(80);
 				temp.getImage().setLayoutX(temp.getPosX()-25);
 				temp.getImage().setLayoutY(temp.getPosY());
+				
+				System.out.println(temp.getImage().getLayoutX());
+				System.out.println(temp.getImage().getLayoutY());
+				
 				TranslateTransition trans = new TranslateTransition();
 				trans.setDuration(Duration.millis(super.getSpeedY())); 
 				trans.setNode(temp.getImage());
@@ -113,55 +151,20 @@ public class HilBasic extends Hil{
 				temp = temp.getNext();
 			}
 			
+		}
+		
+		/**
+		 * Redefine las coordenadas Y al entrar en pantalla
+		 */
+		public void setYs(){
+			Enemy temp = this.getHead();
 			
+			while(temp != null){ //Recorre la lista hasta llegar al ultimo Enemy
+				temp.setPosY(40);
+				temp = temp.getNext();
+			}
 			
 		}
-			
-//			this.getHead().getImage().setFitHeight(90);
-//			GameWindow.imageEnemy1.setFitWidth(90);
-//			GameWindow.imageEnemy1.setLayoutX(posX+(90*0)); 
-//			GameWindow.imageEnemy1.setLayoutY(posY);
-//			
-//			GameWindow.imageEnemy2.setFitHeight(90);
-//			GameWindow.imageEnemy2.setFitWidth(90);
-//			GameWindow.imageEnemy2.setLayoutX(posX+(90*1)); 
-//			GameWindow.imageEnemy2.setLayoutY(posY);
-//			
-//			GameWindow.imageEnemy3.setFitHeight(90);
-//			GameWindow.imageEnemy3.setFitWidth(90);
-//			GameWindow.imageEnemy3.setLayoutX(posX+(90*2)); 
-//			GameWindow.imageEnemy3.setLayoutY(posY);
-//			
-//			GameWindow.imageEnemy4.setFitHeight(90);
-//			GameWindow.imageEnemy4.setFitWidth(90);
-//			GameWindow.imageEnemy4.setLayoutX(posX+(90*3)); 
-//			GameWindow.imageEnemy4.setLayoutY(posY);
-//			
-//			GameWindow.imageEnemy5.setFitHeight(90);
-//			GameWindow.imageEnemy5.setFitWidth(90);
-//			GameWindow.imageEnemy5.setLayoutX(posX+(90*4));
-//			GameWindow.imageEnemy5.setLayoutY(posY);
-//			
-//			GameWindow.imageEnemy6.setFitHeight(90);
-//			GameWindow.imageEnemy6.setFitWidth(90);
-//			GameWindow.imageEnemy6.setLayoutX(posX+(90*5)); 
-//			GameWindow.imageEnemy6.setLayoutY(posY);
-//		
-//			GameWindow.imageEnemy7.setFitHeight(90);
-//			GameWindow.imageEnemy7.setFitWidth(90);
-//			GameWindow.imageEnemy7.setLayoutX(posX+(90*6));
-//			GameWindow.imageEnemy7.setLayoutY(posY);
-//			
-//			GameWindow.imageEnemy8.setFitHeight(90);
-//			GameWindow.imageEnemy8.setFitWidth(90);
-//			GameWindow.imageEnemy8.setLayoutX(posX+(90*7));
-//			GameWindow.imageEnemy8.setLayoutY(posY);
-//			
-//			GameWindow.imageEnemy9.setFitHeight(90);
-//			GameWindow.imageEnemy9.setFitWidth(90);
-//			GameWindow.imageEnemy9.setLayoutX(posX+(90*8));
-//			GameWindow.imageEnemy9.setLayoutY(posY);
-//		}
 		
 		
 }
